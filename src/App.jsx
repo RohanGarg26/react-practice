@@ -1,7 +1,6 @@
-import React, { Component, useState } from 'react';
-import './App.css';
+import React, { Component } from 'react';
+import styleClasses from './App.module.css';
 import Person from './Person/Person'
-import './Person/Person.css'
 
 class App extends Component {
   //class components
@@ -57,14 +56,8 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px'
-    }
-
     let person = null;
+    let btnClass = '';
 
     if (this.state.showPerson) {
       person = (
@@ -78,47 +71,26 @@ class App extends Component {
           })}
         </div>
       );
+      btnClass = styleClasses.red;
+    }
+
+    let classes = []
+    if (this.state.person.length <= 2) {
+      classes.push(styleClasses.red)
+    }
+    if (this.state.person.length <= 1) {
+      classes.push(styleClasses.bold)
     }
 
     return (
-      <div className="App">
-        <h1>Hey, I'm pracicing react!</h1>
-        <button style={style} onClick={this.togglePersonHandler}>Toggle Persons</button>
-        {person}
-      </div>
+        <div className={styleClasses.App}>
+          <h1 className={classes.join(' ')}>Hey, I'm pracicing react!</h1>
+          <button onClick={this.togglePersonHandler} className={btnClass}>Toggle Persons</button>
+          {person}
+        </div>
     )
   }
 }
 
 
 export default App;
-
-
-//for functional components
-// const [personState, setPersonState] = useState({
-//   person: [
-//     { name: 'Rohan', age: '20' },
-//     { name: 'Sammy', age: '19' },
-//     { name: 'Nishant', age: '18' }
-//   ]
-// })
-
-// //can use multiple useState
-// const switchNameHandler = () => {
-//   setPersonState ({  //replaces the old state
-//     person: [
-//       { name: 'ROHAN', age: '20' },
-//       { name: 'Sammy', age: '19' },
-//       { name: 'Nishant', age: '18' }
-//     ]
-//   })
-// }
-
-// <Person name={this.state.person[0].name}
-// age={this.state.person[0].age}
-// click={() => this.switchNameHandler('yass')}>I enjoy playing Lawn Tennis</Person>
-// {/* bind is better option as more efficient*/}
-// <Person name={this.state.person[1].name}
-// age={this.state.person[1].age}
-// change={this.nameChangeHandler} />
-// <Person name={this.state.person[2].name} age={this.state.person[2].age} onClick={this.switchNameHandler.bind(this, 'OMG')} />
